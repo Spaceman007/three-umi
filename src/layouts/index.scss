@@ -1,0 +1,19 @@
+
+.sider {
+  box-sizing: border-box;
+  background: #ffffff;
+  transition: all 300ms;
+}
+.header {
+  box-sizing: border-box;
+  padding-left: 10px;
+  background: steelblue;
+  color: #ffffff;
+}
+.content {
+  box-sizing: border-box;
+  padding: 10px;
+}
+.fold {
+  cursor: pointer;
+}

@@ -1,0 +1,38 @@
+
+.layout {
+  display: flex;
+  background: #f2f2f2;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+.layout-header,
+.layout-content,
+.layout-footer {
+  box-sizing: border-box;
+}
+.layout-header {
+  height: 64px;
+  line-height: 64px;
+  width: 100%;
+  font-size: 1.2em;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.layout-sider {
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+  height: 100%;
+  flex: 0 0 200px;
+}
+.layout-content {
+  flex: 1 1 auto;
+}
+.layout-footer {
+  height: 64px;
+  line-height: 64px;
+  font-family: 'Courier New', Courier, monospace;
+}
