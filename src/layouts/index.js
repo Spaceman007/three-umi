@@ -1,10 +1,14 @@
 
 import Layout from '@/components/layout'
 import styles from './index.scss'
-import { Icon } from 'antd'
+import { Icon, Menu } from 'antd'
 import React from 'react'
+import Link from 'umi/link'
+import { connect } from 'dva'
 
 const { Header, Sider, Content } = Layout
+const MenuItem = Menu.Item
+const SubMenu = Menu.SubMenu
 
 class View extends React.Component {
   constructor (props) {
@@ -60,9 +64,23 @@ class View extends React.Component {
     return (
       <Layout>
         <Sider className={styles.sider} style={{...this.state.sider}}>
-          Hodo
+          <Menu mode='inline' theme='dark' style={{height:'100vh'}}>
+            <MenuItem disabled key='title'>THREE DEMOS</MenuItem>
+            <SubMenu title='Lights' key='fhei'>
+              <MenuItem key='ambient-light'><Link to='/lights/ambient'>Ambient Light</Link></MenuItem>
+              <MenuItem key='point-light'><Link to='/lights/point'>Point Light</Link></MenuItem>
+              <MenuItem key='spot-light'><Link to='/lights/spot'>Spot Light</Link></MenuItem>
+            </SubMenu>
+            <SubMenu title='Cameras' key='cameras'>
+              <MenuItem key='orthographic'>OrthoGraphic Camera</MenuItem>
+              <MenuItem key='perspective'>Perspective Camera</MenuItem>
+            </SubMenu>
+            <MenuItem key='materials'>Materials</MenuItem>
+            <MenuItem key='geometries'>Geometries</MenuItem>
+            <MenuItem key='textures'>Textures</MenuItem>
+          </Menu>
         </Sider>
-        <Layout>
+        <Layout style={{zIndex:100}}>
           <Header className={styles.header}>
             <span className={styles.fold}>
               {
@@ -71,6 +89,7 @@ class View extends React.Component {
                 : <Icon type='menu-fold' onClick={this.fold}/>
               }
             </span>
+            <span className={styles.title}>{this.props.title}</span>
           </Header>
           <Content className={styles.content}>
             { this.props.children }
@@ -81,4 +100,10 @@ class View extends React.Component {
   }
 }
 
-export default View
+export default connect(
+  (state) => {
+    return {
+      title: state.global.title
+    }
+  }
+)(View)
