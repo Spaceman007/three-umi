@@ -65,7 +65,7 @@ class View extends React.Component {
       <Layout>
         <Sider className={styles.sider} style={{...this.state.sider}}>
           <Menu mode='inline' theme='dark' style={{height:'100vh'}}>
-            <MenuItem disabled key='title'>THREE DEMOS</MenuItem>
+            <MenuItem key='title'><Link to='/'>THREE DEMOS</Link></MenuItem>
             <SubMenu title='Lights' key='fhei'>
               <MenuItem key='ambient-light'><Link to='/lights/ambient'>Ambient Light</Link></MenuItem>
               <MenuItem key='point-light'><Link to='/lights/point'>Point Light</Link></MenuItem>

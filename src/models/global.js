@@ -8,14 +8,17 @@ export default {
 
   reducers: {
     'title' (state, action) {
-      return { ...state, title: action.title }
+      const obj = {}
+      if (action.title) obj.title = action.title
+      else obj.title = 'Welcome!'
+      return { ...state, ...obj }
     }
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen((location) => {
-        dispatch({ type: 'title', title: location.pathname.split('/').filter(_ => _).join('-> ') })
+        dispatch({ type: 'title', title: location.pathname.split('/').filter(_ => _).join(' -> ') })
       })
     }
   }
