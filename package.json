@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "dva": "^2.2.3",
+    "three": "^0.92.0",
     "umi": "^1.2.6",
     "umi-plugin-dva": "^0.6.4"
   }
