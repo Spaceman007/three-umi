@@ -56,7 +56,7 @@ var Stats = function () {
 
 	while ( msGraph.children.length < 74 ) {
 
-		var bar = document.createElement( 'span' );
+		let bar = document.createElement( 'span' );
 		bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#131';
 		msGraph.appendChild( bar );
 
@@ -76,6 +76,8 @@ var Stats = function () {
 				fpsDiv.style.display = 'none';
 				msDiv.style.display = 'block';
 				break;
+      default:
+        break
 		}
 
 	}

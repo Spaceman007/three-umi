@@ -2,6 +2,8 @@
 import React from 'react'
 import THREE from '@/utils/t3'
 import Stats from '@/utils/Stats'
+import { connect } from 'dva'
+import * as dat from 'dat.gui'
 
 function createCamera (c) {
   const camera = new THREE.PerspectiveCamera(45, c.offsetWidth / c.offsetHeight, 0.1, 1000)
@@ -64,15 +66,35 @@ function createStats () {
 
   return stats
 }
+function createGui (cb) {
+  const gui = new dat.GUI()
+  const controls = {
+    ambientColor: "#0c0c0c"
+  }
+  gui.addColor(controls, 'ambientColor').onChange(color => {
+    cb(color)
+  })
+  gui.domElement.style.position = 'absolute'
+  gui.domElement.style.right = 0
+  gui.domElement.style.top = 0
+
+  return gui
+}
 
 class View extends React.Component {
   animateRef = null
+
+  constructor (props) {
+    super(props)
+    this.props = props
+  }
 
   handleResize = () => {
     if (this.renderer) { this.renderer.updateSize() }
     if (this.camera) { this.camera.update() }
   }
   init () {
+    const { color, onColorChange } = this.props
     this.container = this._dom.parentNode
     this.scene = new THREE.Scene()
     this.camera = createCamera(this.container)
@@ -80,7 +102,7 @@ class View extends React.Component {
 
     this.ground = createGround()
     this.cube = createCube()
-    this.light = new THREE.AmbientLight('#c0c0c0')
+    this.light = new THREE.AmbientLight(color || '#c0c0c0')
 
     this.scene.add(this.ground)
     this.scene.add(this.cube)
@@ -88,6 +110,12 @@ class View extends React.Component {
 
     this.stats = createStats()
     this.container.appendChild(this.stats.domElement)
+
+    this.gui = createGui(color => {
+      this.light.color = new THREE.Color(color)
+      onColorChange(color)
+    })
+    this.container.appendChild(this.gui.domElement)
   }
   componentDidMount () {
     this.init()
@@ -100,6 +128,7 @@ class View extends React.Component {
   componentWillUnmount () {
     cancelAnimationFrame(this.animateRef)
     this.container.removeChild(this.stats.domElement)
+    this.container.removeChild(this.gui.domElement)
     window.removeEventListener('resize', this.handleResize)
   }
   updatePosition () {
@@ -118,4 +147,17 @@ class View extends React.Component {
   }
 }
 
-export default View
+export default connect(
+  (state) => {
+    return {
+      color: state.ambient.color
+    }
+  },
+  (dispatch) => {
+    return {
+      onColorChange (color) {
+        dispatch({ type: 'ambient/color', color })
+      }
+    }
+  }
+)(View)
