@@ -66,11 +66,15 @@ function createStats () {
 
   return stats
 }
-function createGui (cb) {
+function createGui (cb, history) {
   const gui = new dat.GUI()
   const controls = {
+    Help: function (e) {
+      history.push({ pathname: '/help/ambient' })
+    },
     ambientColor: "#0c0c0c"
   }
+  gui.add(controls, 'Help')
   gui.addColor(controls, 'ambientColor').onChange(color => {
     cb(color)
   })
@@ -94,7 +98,7 @@ class View extends React.Component {
     if (this.camera) { this.camera.update() }
   }
   init () {
-    const { color, onColorChange } = this.props
+    const { color, onColorChange, history } = this.props
     this.container = this._dom.parentNode
     this.scene = new THREE.Scene()
     this.camera = createCamera(this.container)
@@ -114,7 +118,7 @@ class View extends React.Component {
     this.gui = createGui(color => {
       this.light.color = new THREE.Color(color)
       onColorChange(color)
-    })
+    }, history)
     this.container.appendChild(this.gui.domElement)
   }
   componentDidMount () {
