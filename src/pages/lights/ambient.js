@@ -1,6 +1,7 @@
 
 import React from 'react'
 import THREE from '@/utils/t3'
+import Stats from '@/utils/Stats'
 
 function createCamera (c) {
   const camera = new THREE.PerspectiveCamera(45, c.offsetWidth / c.offsetHeight, 0.1, 1000)
@@ -53,6 +54,17 @@ function createRenderer (c) {
   return renderer
 }
 
+function createStats () {
+  const stats = Stats()
+  stats.setMode(0)
+
+  stats.domElement.style.position = 'absolute'
+  stats.domElement.style.left = 0
+  stats.domElement.style.top = 0
+
+  return stats
+}
+
 class View extends React.Component {
   animateRef = null
 
@@ -73,6 +85,9 @@ class View extends React.Component {
     this.scene.add(this.ground)
     this.scene.add(this.cube)
     this.scene.add(this.light)
+
+    this.stats = createStats()
+    this.container.appendChild(this.stats.domElement)
   }
   componentDidMount () {
     this.init()
@@ -84,6 +99,7 @@ class View extends React.Component {
   }
   componentWillUnmount () {
     cancelAnimationFrame(this.animateRef)
+    this.container.removeChild(this.stats.domElement)
     window.removeEventListener('resize', this.handleResize)
   }
   updatePosition () {
@@ -92,6 +108,7 @@ class View extends React.Component {
     this.cube.rotation.z += 0.01
   }
   renderScene = () => {
+    this.stats.update()
     this.renderer.render(this.scene, this.camera)
     this.updatePosition()
     this.animateRef = requestAnimationFrame(this.renderScene)
