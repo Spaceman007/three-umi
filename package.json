@@ -4,7 +4,7 @@
   "description": "based on umi and dva to show three.js demos",
   "scripts": {
     "start": "PORT=6789 BROWSER=none umi dev",
-    "build": "umi build"
+    "build": "BASE_URL=/three-umi/ umi build"
   },
   "main": "index.js",
   "repository": "git@github.com:Spaceman007/three-umi.git",

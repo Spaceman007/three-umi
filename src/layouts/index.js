@@ -61,15 +61,16 @@ class View extends React.Component {
   }
 
   render () {
+    let { url } = this.props.match
     return (
       <Layout>
         <Sider className={styles.sider} style={{...this.state.sider}}>
           <Menu mode='inline' theme='dark' style={{height:'100vh'}}>
-            <MenuItem key='title'><Link to='/'>THREE DEMOS</Link></MenuItem>
+            <MenuItem key='title'><Link to={`${url}`}>THREE DEMOS</Link></MenuItem>
             <SubMenu title='Lights' key='fhei'>
-              <MenuItem key='ambient-light'><Link to='/lights/ambient'>Ambient Light</Link></MenuItem>
-              <MenuItem key='point-light'><Link to='/lights/point'>Point Light</Link></MenuItem>
-              <MenuItem key='spot-light'><Link to='/lights/spot'>Spot Light</Link></MenuItem>
+              <MenuItem key='ambient-light'><Link to={`${url}lights/ambient`}>Ambient Light</Link></MenuItem>
+              <MenuItem key='point-light'><Link to={`${url}lights/point`}>Point Light</Link></MenuItem>
+              <MenuItem key='spot-light'><Link to={`${url}lights/spot`}>Spot Light</Link></MenuItem>
             </SubMenu>
             <SubMenu title='Cameras' key='cameras'>
               <MenuItem key='orthographic'>OrthoGraphic Camera</MenuItem>

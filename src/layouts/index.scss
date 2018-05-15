@@ -13,7 +13,8 @@
 .content {
   box-sizing: border-box;
   margin: 1px;
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
 }
 .fold {
